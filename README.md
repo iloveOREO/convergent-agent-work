@@ -8,6 +8,22 @@ A standalone Codex skill for keeping extended, iterative, and multi-workstream a
 
 Long-running agent work can drift into repeated tool calls, overlapping reviewers, full re-reviews after small fixes, and ever-growing context. This skill gives Codex a compact set of decision rules for making each additional action reduce uncertainty, change the artifact, or verify a material risk.
 
+## Case study: hundreds of millions → tens of thousands of tokens
+
+In one reported long-running multi-agent review-and-fix conversation, aggregate token consumption across the parent conversation and its subagents grew into the **hundreds of millions**. Each small patch triggered another broad reviewer, full history and large diffs were replayed into new agents, unchanged checks were rerun, and agents were asked to validate other agents' validation.
+
+| Workflow surface | Before | After applying this skill |
+| --- | --- | --- |
+| Working state | Replay raw conversation history, diffs, and logs | Carry a compact ledger of decisions, evidence, changes, and open risks |
+| Review | Start another general reviewer after each patch | Give each risk surface one owner and recheck only the changed delta |
+| Validation | Rerun broad suites after every small edit | Run focused checks for the delta and required full checks at the real release boundary |
+| Delegation | Spawn overlapping agents and “validate the validation” | Assign independent scopes, reuse informed agents, and retire obsolete work |
+| **Aggregate token use** | **Hundreds of millions** | **Tens of thousands** |
+
+After the workflow in this skill was applied to the follow-up run, the same acceptance and verification boundary was completed with aggregate consumption directly in the **tens-of-thousands** range—several orders of magnitude lower. The reduction came from eliminating duplicate work, not from truncating the task or skipping required checks.
+
+> This is a reported case study, not a universal benchmark or guaranteed saving. Actual token use depends on task size, model, tool output, agent topology, and repository requirements.
+
 ## What it does
 
 - Maintains a compact working ledger of constraints, findings, changes, validations, and unresolved risks.
