@@ -1,0 +1,6 @@
+interface:
+  display_name: "Convergent Agent Work"
+  short_description: "Keep extended agent workflows focused and convergent"
+  default_prompt: "Use $convergent-agent-work to keep this extended, iterative task thorough and convergent."
+policy:
+  allow_implicit_invocation: true
